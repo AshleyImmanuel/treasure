@@ -14,8 +14,7 @@
     0% { 
         color: #FFD700; /* Gold */
         transform: scale(1);
-        text-shadow: 0 0 15px #FFD700, 0 0 5px #90EE90
-;
+        text-shadow: 0 0 15px #FFD700, 0 0 5px #90EE90;
     } 
     50% { 
         color: #FF4500; /* Deep Red/Orange */
@@ -325,3 +324,4 @@ h1 {
     }
 
 }
+
