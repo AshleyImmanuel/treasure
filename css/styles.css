@@ -1,286 +1,61 @@
-/* ===========================
-   ANIMATIONS
-=========================== */
-@keyframes pageFadeIn {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
+/* ====== Fix: hero visibility + centered countdown ====== */
+/* Put this at the end of styles.css to override earlier rules */
 
-@keyframes pulse {
-    0% { box-shadow: 0 0 15px rgba(255,215,0,0.4); }
-    50% { box-shadow: 0 0 30px rgba(255,215,0,0.8); }
-    100% { box-shadow: 0 0 15px rgba(255,215,0,0.4); }
-}
-
-@keyframes breathingGlow {
-    0% { color:#FFD700; text-shadow:0 0 10px #FFD700; }
-    50% { color:#FF4500; text-shadow:0 0 25px #FF4500; }
-    100% { color:#FFD700; text-shadow:0 0 10px #FFD700; }
-}
-
-@keyframes fireGlow {
-    0%,100% { text-shadow:0 0 10px #FF4500; }
-    50% { text-shadow:0 0 25px #FF8C00; }
-}
-
-@keyframes fireworkFlash {
-    0%,100% { background-color:#FF5722; }
-    50% { background-color:#D32F2F; transform:scale(1.1); }
-}
-
-/* ===========================
-   BASE PAGE STYLE
-=========================== */
-* { box-sizing: border-box; }
-
-html, body {
-    margin: 0;
-    padding: 0;
-    font-family: "Poppins", sans-serif;
-    animation: pageFadeIn 0.5s ease-out;
-    background: #F0F4F8;
-    color: #333;
-}
-
-/* ===========================
-   NAVBAR
-=========================== */
-nav {
-    background: #111;
-    padding: 0.8rem 0;
-    text-align: center;
-    border-bottom: 4px solid #FFD700;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    animation: pulse 4s infinite alternate;
-}
-
-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 26px;
-    justify-content: center;
-    padding: 0;
-    margin: 0;
-}
-
-nav ul li a {
-    color: #F0F4F8;
-    text-decoration: none;
-    font-size: 1.25rem;
-    font-weight: 600;
-    transition: 0.2s;
-}
-
-nav ul li a:hover {
-    color: #FFD700;
-    transform: scale(1.1);
-}
-
-/* ===========================
-   HEADER (HERO)
-=========================== */
 header {
-    height: 420px;
-    background-image: url("../assets/header-background.jpg");
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    padding: 2rem 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+  /* allow header to shrink on mobile and keep background */
+  height: auto !important;
+  padding: 30px 12px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-position: center !important;
 }
 
+/* make the dark overlay slightly less opaque so text reads better */
 header::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(255,70,0,0.7));
+  background: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(255,69,0,0.6)) !important;
+  z-index: 0 !important;
 }
 
+/* keep the faint logo behind everything (but not darker than overlay) */
 header::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: url("../assets/logo.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    opacity: 0.12;
+  background-size: contain !important;
+  opacity: 0.10 !important;
+  z-index: 0 !important;
 }
 
-.hero-title {
-    font-size: clamp(1.8rem, 4.5vw, 3.8rem);
-    font-weight: 900;
-    text-transform: uppercase;
-    color: #fff;
-    z-index: 2;
-    letter-spacing: 5px;
+/* ensure hero content sits on top of overlays */
+.hero, .hero-title, .hero-sub, .countdown-timer, #event-message {
+  position: relative !important;
+  z-index: 3 !important;
 }
 
-.hero-sub {
-    margin-top: 5px;
-    color: #ffe9b3;
-    z-index: 2;
-}
-
-/* ===========================
-   COUNTDOWN
-=========================== */
+/* center and stack the countdown under the title */
+.hero-title, .hero-sub { text-align: center !important; margin: 0.2rem 8px !important; }
 .countdown-timer {
-    font-size: clamp(1.6rem, 6vw, 3rem);
-    margin-top: 1rem;
-    font-weight: 900;
-    color: #FFD700;
-    animation: breathingGlow 3s infinite alternate;
-    z-index: 2;
+  display: block !important;
+  margin: 12px auto 6px !important;
+  text-align: center !important;
+  font-size: clamp(1.2rem, 7vw, 2.8rem) !important;
+  color: #FFD11A !important;
+  text-shadow: 0 6px 14px rgba(0,0,0,0.5) !important;
 }
 
-.countdown-final {
-    font-size: 1.4rem;
-    padding: 10px 20px;
-    background: #FF5722;
-    color: white;
-    border-radius: 10px;
-    border: 3px solid #FFD700;
-    animation: fireworkFlash 0.8s infinite alternate;
-    margin-top: 1rem;
-    display: inline-block;
-    z-index: 2;
+/* ensure countdown doesn't float to the right (remove any float/absolute set earlier) */
+.countdown-timer {
+  position: relative !important;
+  float: none !important;
+  right: auto !important;
+  top: auto !important;
 }
 
-/* ===========================
-   PAGE SECTIONS
-=========================== */
-section {
-    background: white;
-    max-width: 1100px;
-    margin: 1.5rem auto;
-    padding: 2rem 1.5rem;
-    border-radius: 14px;
-    box-shadow: 0 10px 35px rgba(0,0,0,0.1);
-}
-
-h2, h3 {
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 900;
-    color: #D32F2F;
-    animation: fireGlow 4s infinite;
-}
-
-/* ===========================
-   MAIN TWO-COLUMN ROW
-=========================== */
-.main-content-row {
-    max-width: 1100px;
-    margin: auto;
-    display: flex;
-    gap: 20px;
-    padding: 20px;
-}
-
-/* Each column */
-.content-column {
-    flex: 1;
-    background: #fff;
-    padding: 20px;
-    border-radius: 14px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-/* QR Code */
-.qr-code-container img {
-    width: 100%;
-    max-width: 260px;
-    display: block;
-    margin: auto;
-    border-radius: 8px;
-}
-
-/* ===========================
-   CONTACT SECTION
-=========================== */
-#contact-details strong {
-    color: #D32F2F;
-    font-weight: 700;
-}
-
-.btn {
-    background: #4CAF50;
-    padding: 0.9rem 2.4rem;
-    border-radius: 40px;
-    display: inline-block;
-    text-decoration: none;
-    color: #fff;
-    font-weight: 700;
-    box-shadow: 0 6px 20px rgba(76,175,80,0.3);
-    transition: 0.3s;
-    cursor: pointer;
-}
-
-.btn:hover {
-    transform: translateY(-4px) scale(1.05);
-}
-
-/* ===========================
-   🔥 MOBILE FIXES (THE IMPORTANT PART)
-=========================== */
+/* slightly increase title contrast/size on mobile */
 @media (max-width: 768px) {
-
-    header {
-        height: auto;
-        padding: 40px 12px;
-        background-position: center !important;
-    }
-
-    header::after {
-        background-size: contain !important;
-    }
-
-    nav ul {
-        gap: 14px;
-    }
-
-    nav ul li a {
-        font-size: 1rem;
-    }
-
-    .main-content-row {
-        flex-direction: column !important;
-        padding: 10px;
-    }
-
-    .content-column {
-        width: 100% !important;
-        min-width: 100% !important;
-        text-align: center;
-        padding: 20px 15px;
-    }
-
-    #qr-code img {
-        width: 70% !important;
-        max-width: 220px;
-    }
-
-    .btn {
-        width: 85%;
-        margin: auto;
-        display: block;
-        font-size: 1rem;
-    }
-}
-
-/* VERY SMALL SMARTPHONES FIX */
-@media (max-width: 420px) {
-    .hero-title {
-        font-size: 1.6rem;
-        letter-spacing: 1px;
-    }
-    .countdown-timer {
-        font-size: 1.4rem;
-    }
+  .hero-title {
+    font-size: clamp(1.5rem, 6.5vw, 2.6rem) !important;
+    letter-spacing: 1.5px !important;
+    color: #ffffff !important;
+    text-shadow: 3px 3px 10px rgba(0,0,0,0.8) !important;
+  }
 }
